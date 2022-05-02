@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFF548" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:id="@+id/btnLayout_dialog">
+        <Button
+            android:id="@+id/btn1_dialog"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#3AE4E3"
+            android:text="Btn1"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/btn2_dialog"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="#3AE4E3"
+            android:text="Btn2"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnLayout_dialog"
+        android:id="@+id/lottie_anim_dialog"
+        app:lottie_autoPlay="true"
+        android:layout_marginTop="30dp"   />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_dialog1"
+        android:text="here is our text"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#3C1A5B"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/lottie_anim_dialog"
+        android:padding="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_dialog2"
+        android:text="here is our text"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#3C1A5B"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_dialog1"
+        android:padding="1dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_dialog3"
+        android:text="here is our text"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#3C1A5B"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_dialog2"
+        android:padding="1dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_dialog4"
+        android:text="here is our text"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#3C1A5B"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_dialog3"
+        android:padding="1dp"/>
+    <Button
+        android:id="@+id/btn3_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#3AE4E3"
+        android:text="Btn3"
+        android:background="@drawable/comment_background"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_below="@id/text_dialog4"/>
+
+</RelativeLayout>

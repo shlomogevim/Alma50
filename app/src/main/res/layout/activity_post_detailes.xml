@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_ui"
+
+    android:keepScreenOn="true"
+
+    tools:context=".activities.PostDetailesActivity"  >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/layoutCurrentUserName"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameCurrentUserName"
+            android:textSize="16sp"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:textColor="@color/white"
+            android:paddingRight="24sp"
+            android:paddingLeft="24sp"
+            android:gravity="center"
+            android:text="אנונימי"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleCurrentUserName"
+            android:textSize="16sp"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:textColor="@color/white"
+            android:paddingRight="24sp"
+            android:paddingLeft="24sp"
+            android:gravity="center"
+            android:text="משתמש:"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/layoutCurrentUserName"
+        android:orientation="horizontal"
+        android:id="@+id/buttomLayout"
+        android:layout_margin="1dp">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/profileBtn"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:text="פרופיל"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/signUpBtn"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:text="---"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/signInBtn"
+            android:text="הכנס"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            />
+    </LinearLayout>             // bottomLayout
+
+    <TextView
+        android:id="@+id/postNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttomLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/button_black_background"
+        android:backgroundTint="@color/broun1"
+        android:fontFamily="@font/a200_comixno2clm_bold_webfont"
+        android:gravity="center"
+        android:padding="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="100"
+        android:textColor="@color/orenge1"
+        android:textSize="18sp" />                      //postNumber
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textPost"
+        android:layout_below="@id/postNumber"
+        android:layout_marginTop="2dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/tvPost1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/tvPost2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/tvPost3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvPost9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_black_background"
+            android:backgroundTint="@color/broun1"
+            android:padding="2dp"
+            android:text="שורה אחת"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/a103_gadi_almog_regular_aaa"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/addCommentLayout"
+        android:layout_below="@id/textPost"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="2dp" />
+
+    <RelativeLayout
+        android:id="@+id/addCommentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:clickable="true"
+        android:background="@drawable/comment_background"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_comment"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/ic_send" />
+
+        <EditText
+            android:id="@+id/post_comment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_toRightOf="@id/profile_image_comment"
+            android:hint="ומה שיש לי להגיד הוא ..."
+            android:maxLines="9"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/messageLayout"
+        android:elevation="10dp"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+    <!--  <RelativeLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/user_profile_image_comment"
+               >
+
+                <TextView
+                    android:id="@+id/user_name_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="user name"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/comment_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/user_name_comment"
+                    android:text="comment text"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>-->
