@@ -294,13 +294,13 @@ class UtilityPost {
     }
 
 
-    fun createComment(post: Post, commentText: String) {
+    fun createComment(post: Post, commentText: String,currentUser:User) {
         val data = HashMap<String, Any>()
         data[COMMENT_ID] = "1"
         data[COMMENT_POST_ID] = post.postNum.toString()
         data[COMMENT_TEXT] = commentText
-        data[COMMENT_USER_NAME] = currentUser?.displayName.toString()
-        data[COMMENT_USER_ID] = currentUser?.uid.toString()
+        data[COMMENT_USER_NAME] = currentUser.userName
+        data[COMMENT_USER_ID] = currentUser.uid
         data[COMMEND_TIME_STAMP] = FieldValue.serverTimestamp()
         val ref = FirebaseFirestore.getInstance().collection(COMMENT_REF)
             .document(post.postNum.toString())

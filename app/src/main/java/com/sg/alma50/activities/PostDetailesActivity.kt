@@ -46,10 +46,16 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
     lateinit var commentAdapter: CommentAdapter
     val comments = ArrayList<Comment>()
     lateinit var currentPost: Post
+    var message=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityPostDetailesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+
+
         if (intent.hasExtra(POST_EXSTRA)) {
             currentPost = intent.getParcelableExtra(POST_EXSTRA)!!
 
@@ -71,12 +77,18 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
          super.onStart()
      FirestoreClass().getUserDetails(this)
      }
+    fun getUserNameSetting(user: User) {
+        currentUser=user
+        if (currentUser==null){
+            binding.nameCurrentUserName.setText("אנונימי")
+        }else{
+            binding.nameCurrentUserName.setText("${currentUser!!.userName}")
+        }
+    }
+
      private fun operateButtoms() {
-        /*  binding.signUpBtn.setOnClickListener {
-             startActivity(Intent(this, SignUpActivity::class.java))
-         }*/
+
         binding.signInBtn.setOnClickListener {
-            //startActivity(Intent(this, LoginActivity::class.java))
             startActivity(Intent(this,LoginActivity::class.java))
         }
 
@@ -88,92 +100,157 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
         }
     }
 
-    fun getUserNameSetting(user: User) {
-        currentUser=user
-
-        //  currentUser=null
-
-        if (currentUser==null){
-            binding.nameCurrentUserName.setText("אנונימי")
-        }else{
-            binding.nameCurrentUserName.setText("${currentUser!!.userName}")
-        }
-    }
 
     private fun createCommant(){
-        val textWatcher=object : TextWatcher {
+
+
+        /*val textWatcher=object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 logi("PostDetailsActivuty  102                            currentUser=$currentUser")
                 if (currentUser==null){
                     hideKeyboard()
-                    var st="כדי לכתוב הערות אתה צריך קודם להכנס ..."
-
-                    //  showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
-                    showErrorSnackBar(st, true)
-
-
-                    //  util.createDialog(this@PostDetailsActivity, 2)
-                }
+                    message="כדי לכתוב הערות אתה צריך קודם להכנס ..."
+                    showErrorSnackBar(message, true)
+                     }
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {  }
             override fun afterTextChanged(p0: Editable?) {  }
+        }*/
+
+
+
+
+        binding.profileImageComment.setOnClickListener {
+            press_on_comment_icon()
         }
 
-        val profileC= binding.profileImageComment
-        val textC= binding.postCommentText
-        textC.addTextChangedListener(textWatcher)
+        binding.postCommentText.setOnClickListener {
+            press_on_text_comment()
 
-        profileC.setOnClickListener {
-            util.logi("PostDetails  109                             currentUser=$currentUser")
-            addComment()
+           /* if (currentUser == null) {
+                hideKeyboard()
+                message="צריך להכנס כדי לכתוב הערה"
+                showErrorSnackBar(message,true )
+            }else{
+                val textC= binding.postCommentText
+                textC.addTextChangedListener(textWatcher)
+
+
+                    addComment()
+            }*/
+
         }
-        textC.setOnClickListener {
-            util.logi("PostDetails  110                               currentUser=$currentUser")
+    }
 
-            addComment()
+    private fun press_on_text_comment() {
+        if (currentUser == null) {
+            hideKeyboard()
+            message="צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message,true )
+        }else {
+
+          /*  val textWatcher1=object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    logi("PostDetailsActivuty  102                            currentUser=$currentUser")
+                    if (currentUser==null){
+                        hideKeyboard()
+                        message="כדי לכתוב הערות אתה צריך קודם להכנס ..."
+                        showErrorSnackBar(message, true)
+                    }
+                }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {  }
+                override fun afterTextChanged(p0: Editable?) {  }
+            }
+
+            val textC= binding.postCommentText
+            textC.addTextChangedListener(textWatcher1)*/
+
+
+        }
+
+    }
+
+    private fun press_on_comment_icon() {
+        if (currentUser == null) {
+            hideKeyboard()
+            message="צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message,true )
+        }else{
+            val commentText = binding.postCommentText.text.toString()
+            if (commentText == "") {
+                message=" היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
+                showErrorSnackBar(message, true)
+            }else{
+                sendComment()
+            }
+        }
+    }
+
+    private fun sendComment() {
+        binding.postCommentText.text.clear()
+        hideKeyboard()
+        FirebaseFirestore.getInstance().collection(POST_REF)
+            .document(currentPost.postNum.toString())
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val post = util.retrivePostFromFirestore(task.result)
+                    val commentText = binding.postCommentText.text.toString()
+                    currentUser?.let { util.createComment(post, commentText, it) }
+                }
+            }
+    }
+
+
+    private fun addComment() {
+        //util.logi("PostDetails  112                               currentUser=$currentUser")
+        if (currentUser == null) {
+            //   util.logi("PostDetails  113                               currentUser=$currentUser")
+            hideKeyboard()
+            message="צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message,true )
+        } else {
+           // util.logi("PostDetails  114                               currentUser=$currentUser")
+            val commentText = binding.postCommentText.text.toString()
+            if (commentText == "") {
+                message=" היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
+                showErrorSnackBar(message, true)
+            } else {
+                binding.postCommentText.text.clear()
+                hideKeyboard()
+                FirebaseFirestore.getInstance().collection(POST_REF)
+                    .document(currentPost.postNum.toString())
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val post = util.retrivePostFromFirestore(task.result)
+                            util.createComment(post, commentText, currentUser!!)
+                        }
+                    }
+            }
         }
     }
 
 
     private fun drawHeadline() {
         val num = currentPost.postNum
-       val st = "   פוסט מספר: " + "$num   "
-     binding.postNumber.text = st
-    // logi("PostDetailsActivity  111  post=$currentPost    \n post.postText.size= ${currentPost.postText.size}")
+        val st = "   פוסט מספר: " + "$num   "
+        binding.postNumber.text = st
+        // logi("PostDetailsActivity  111  post=$currentPost    \n post.postText.size= ${currentPost.postText.size}")
 
         drawPostText()
 
 
-    /*    binding.tvPost1.visibility=View.VISIBLE
-        binding.tvPost1.text=currentPost.postText[0]*/
+        /*    binding.tvPost1.visibility=View.VISIBLE
+            binding.tvPost1.text=currentPost.postText[0]*/
 
 
-    /*  for (ind in 0 until currentPost.postText.size) {
-         logi("PostDetailsActivity  144  ind=$ind     \n")
-        textViewArray[ind].visibility = View.VISIBLE
-           textViewArray[ind].text = currentPost.postText[ind]
-      }*/
+        /*  for (ind in 0 until currentPost.postText.size) {
+             logi("PostDetailsActivity  144  ind=$ind     \n")
+            textViewArray[ind].visibility = View.VISIBLE
+               textViewArray[ind].text = currentPost.postText[ind]
+          }*/
     }
-
-
-
-    private fun createTextViewArray() {
-        with(binding) {
-            textViewArray = arrayListOf(
-                tvPost1,
-                tvPost2,
-                tvPost3,
-                tvPost4,
-                tvPost5,
-                tvPost6,
-                tvPost7,
-                tvPost8,
-                tvPost9
-            )
-        }
-
-    }
-
     private fun retriveComments() {
         //  logi(" PostDetail 124")
         FirebaseFirestore.getInstance().collection(COMMENT_REF).document(currentPost.postNum.toString())
@@ -191,36 +268,6 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
                 }
             }
     }
-
-    private fun addComment() {
-        util.logi("PostDetails  112                               currentUser=$currentUser")
-        if (currentUser == null) {
-            //   util.logi("PostDetails  113                               currentUser=$currentUser")
-            hideKeyboard()
-            util.createDialog(this, 1)
-        } else {
-            util.logi("PostDetails  114                               currentUser=$currentUser")
-            val commentText = binding.postCommentText.text.toString()
-            if (commentText == "") {
-                // util.toasti(this, " היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ...")
-                util.createDialog(this, 3)
-            } else {
-                binding.postCommentText.text.clear()
-                hideKeyboard()
-                FirebaseFirestore.getInstance().collection(POST_REF)
-                    .document(currentPost.postNum.toString())
-                    .get()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val post = util.retrivePostFromFirestore(task.result)
-                            util.createComment(post, commentText)
-                        }
-                    }
-            }
-        }
-    }
-
-
 
     private fun create_commentsRv() {
         commentsRV = binding.rvPost
@@ -262,6 +309,23 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun createTextViewArray() {
+        with(binding) {
+            textViewArray = arrayListOf(
+                tvPost1,
+                tvPost2,
+                tvPost3,
+                tvPost4,
+                tvPost5,
+                tvPost6,
+                tvPost7,
+                tvPost8,
+                tvPost9
+            )
+        }
+
     }
 
     private fun drawPostText() {

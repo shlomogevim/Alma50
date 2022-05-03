@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.core.content.res.ResourcesCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.sg.alma50.R
 import com.sg.alma50.databinding.ActivitySplashBinding
 import com.sg.alma50.utilities.BaseActivity
@@ -42,13 +43,17 @@ class SplashActivity : BaseActivity() {
 
                 logi("SplashAvtivity 42  \n     currentUserID  ===> $currentUserID  ")
 
-               // currentUserID=""
+             /*   currentUserID=""
+                FirebaseAuth.getInstance().signOut()*/
 
-                          if (currentUserID.isNotEmpty()) {
+                        /*  if (currentUserID.isNotEmpty()) {
                       startActivity(Intent(this, MainActivityAppShop::class.java))
                   } else{
                       startActivity(Intent(this, LoginActivity::class.java))
-                  }
+                  }*/
+
+                startActivity(Intent(this, MainActivityAppShop::class.java))
+
                 finish()
             },2
         )
