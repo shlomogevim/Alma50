@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.sg.alma50.R
 import com.sg.alma50.activities.PostDetailesActivity
-import com.sg.alma50.activities.StamActivity
 import com.sg.alma50.modeles.Post
 import com.sg.alma50.utilities.Constants.POST_EXSTRA
 import com.sg.pager20.adapters.DrawPostCenter
@@ -20,6 +19,9 @@ class PostAdapter(val viewPager: ViewPager2, val context: Context, val posts: Ar
     RecyclerView.Adapter<PostAdapter.PagerViewHolder>() {
 
     val drawPost = DrawPostCenter(context)
+
+
+
 
 
    // val util = UtilityPost()
@@ -38,6 +40,10 @@ class PostAdapter(val viewPager: ViewPager2, val context: Context, val posts: Ar
         if (position == posts.size - 2) {
             viewPager.post(run)
         }
+
+        /*viewPager.post{
+            viewPager.setCurrentItem(10,true)
+        }*/
         //------------------
     }
 

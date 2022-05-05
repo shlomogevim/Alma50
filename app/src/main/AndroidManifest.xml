@@ -4,8 +4,6 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,11 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.Alma50">
+
         <activity
             android:name=".activities.ForgetPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.StamActivity"
             android:exported="false" />
         <activity
             android:name=".activities.UpdateCommentActivity"
@@ -30,7 +26,10 @@
             android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".activities.SettingActivity"
             android:exported="false" />
@@ -39,6 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivityAppShop"
@@ -48,8 +48,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activities.MainActivity"

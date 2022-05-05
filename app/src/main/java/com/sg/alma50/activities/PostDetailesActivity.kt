@@ -2,10 +2,7 @@ package com.sg.alma50.activities
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -37,89 +34,57 @@ import com.sg.alma50.utilities.UtilityPost
 import java.util.ArrayList
 
 //class PostDetailesActivity :BaseActivity(){
-class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
+class PostDetailesActivity : BaseActivity(), CommentsOptionClickListener {
     lateinit var binding: ActivityPostDetailesBinding
-    private var currentUser:User?= null
+    private var currentUser: User? = null
     var util = UtilityPost()
     var textViewArray = ArrayList<TextView>()
     lateinit var commentsRV: RecyclerView
     lateinit var commentAdapter: CommentAdapter
     val comments = ArrayList<Comment>()
     lateinit var currentPost: Post
-    var message=""
+    var message = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityPostDetailesBinding.inflate(layoutInflater)
+        binding = ActivityPostDetailesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-
-
 
         if (intent.hasExtra(POST_EXSTRA)) {
             currentPost = intent.getParcelableExtra(POST_EXSTRA)!!
 
         }
+        // logi("PostDetailActivity  58          currentPost===>> $currentPost  /n")
+              drawHeadline()
+        create_commentsRv()
+        btnSetting()
+        retriveComments()
+    }
 
-       // logi("PostDetailActivity  58          currentPost===>> $currentPost  /n")
-         logi("PostDetailActivity  59")
-      drawHeadline()
-      create_commentsRv()
-      operateButtoms()
-       retriveComments()
+    override fun onStart() {
+        super.onStart()
+        FirestoreClass().getUserDetails(this)
+    }
 
-       createCommant()
-   }
-
-
-
-     override fun onStart() {
-         super.onStart()
-     FirestoreClass().getUserDetails(this)
-     }
     fun getUserNameSetting(user: User) {
-        currentUser=user
-        if (currentUser==null){
+        currentUser = user
+        if (currentUser == null) {
             binding.nameCurrentUserName.setText("אנונימי")
-        }else{
+        } else {
             binding.nameCurrentUserName.setText("${currentUser!!.userName}")
         }
     }
 
-     private fun operateButtoms() {
-
+    private fun btnSetting() {
         binding.signInBtn.setOnClickListener {
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
         }
 
         binding.profileBtn.setOnClickListener {
             //  logi("PostDetaileActivity  92   =====> /n  currentPost=$currentPost ")
-            val intent=Intent(this, SettingActivity::class.java)
-            intent.putExtra(USER_EXTRA,currentUser)
+            val intent = Intent(this, SettingActivity::class.java)
+            intent.putExtra(USER_EXTRA, currentUser)
             startActivity(intent)
         }
-    }
-
-
-    private fun createCommant(){
-
-
-        /*val textWatcher=object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                logi("PostDetailsActivuty  102                            currentUser=$currentUser")
-                if (currentUser==null){
-                    hideKeyboard()
-                    message="כדי לכתוב הערות אתה צריך קודם להכנס ..."
-                    showErrorSnackBar(message, true)
-                     }
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {  }
-            override fun afterTextChanged(p0: Editable?) {  }
-        }*/
-
-
-
-
         binding.profileImageComment.setOnClickListener {
             press_on_comment_icon()
         }
@@ -127,93 +92,66 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
         binding.postCommentText.setOnClickListener {
             press_on_text_comment()
 
-           /* if (currentUser == null) {
-                hideKeyboard()
-                message="צריך להכנס כדי לכתוב הערה"
-                showErrorSnackBar(message,true )
-            }else{
-                val textC= binding.postCommentText
-                textC.addTextChangedListener(textWatcher)
-
-
-                    addComment()
-            }*/
-
         }
     }
+
 
     private fun press_on_text_comment() {
         if (currentUser == null) {
             hideKeyboard()
-            message="צריך להכנס כדי לכתוב הערה"
-            showErrorSnackBar(message,true )
-        }else {
-
-          /*  val textWatcher1=object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    logi("PostDetailsActivuty  102                            currentUser=$currentUser")
-                    if (currentUser==null){
-                        hideKeyboard()
-                        message="כדי לכתוב הערות אתה צריך קודם להכנס ..."
-                        showErrorSnackBar(message, true)
-                    }
-                }
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {  }
-                override fun afterTextChanged(p0: Editable?) {  }
-            }
-
-            val textC= binding.postCommentText
-            textC.addTextChangedListener(textWatcher1)*/
-
-
+            message = "צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message, true)
         }
-
     }
 
     private fun press_on_comment_icon() {
         if (currentUser == null) {
             hideKeyboard()
-            message="צריך להכנס כדי לכתוב הערה"
-            showErrorSnackBar(message,true )
-        }else{
+            message = "צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message, true)
+        } else {
             val commentText = binding.postCommentText.text.toString()
             if (commentText == "") {
-                message=" היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
+                message = " היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
                 showErrorSnackBar(message, true)
-            }else{
+            } else {
                 sendComment()
             }
         }
     }
 
     private fun sendComment() {
-        binding.postCommentText.text.clear()
+
         hideKeyboard()
         FirebaseFirestore.getInstance().collection(POST_REF)
             .document(currentPost.postNum.toString())
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+
                     val post = util.retrivePostFromFirestore(task.result)
-                    val commentText = binding.postCommentText.text.toString()
+                            //   val email = binding.etEmail.text.toString().trim { it <= ' ' }
+                    val commentText = binding.postCommentText.text.toString().trim { it <= ' ' }
                     currentUser?.let { util.createComment(post, commentText, it) }
+                 // logi("PostDetailesActivity  135    commentText=$commentText  ")
+                   binding.postCommentText.text.clear()
                 }
             }
     }
 
 
-    private fun addComment() {
+  /*  private fun addComment() {
         //util.logi("PostDetails  112                               currentUser=$currentUser")
         if (currentUser == null) {
             //   util.logi("PostDetails  113                               currentUser=$currentUser")
             hideKeyboard()
-            message="צריך להכנס כדי לכתוב הערה"
-            showErrorSnackBar(message,true )
+            message = "צריך להכנס כדי לכתוב הערה"
+            showErrorSnackBar(message, true)
         } else {
-           // util.logi("PostDetails  114                               currentUser=$currentUser")
+            // util.logi("PostDetails  114                               currentUser=$currentUser")
             val commentText = binding.postCommentText.text.toString()
             if (commentText == "") {
-                message=" היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
+                message = " היי , קודם תכתוב משהו בהערה ואחר כך תלחץ ..."
                 showErrorSnackBar(message, true)
             } else {
                 binding.postCommentText.text.clear()
@@ -229,7 +167,7 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
                     }
             }
         }
-    }
+    }*/
 
 
     private fun drawHeadline() {
@@ -251,9 +189,11 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
                textViewArray[ind].text = currentPost.postText[ind]
           }*/
     }
+
     private fun retriveComments() {
         //  logi(" PostDetail 124")
-        FirebaseFirestore.getInstance().collection(COMMENT_REF).document(currentPost.postNum.toString())
+        FirebaseFirestore.getInstance().collection(COMMENT_REF)
+            .document(currentPost.postNum.toString())
             .collection(COMMENT_LIST)
             .orderBy(COMMEND_TIME_STAMP, Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
@@ -277,8 +217,6 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
         commentsRV.layoutManager = layoutManger
         commentsRV.adapter = commentAdapter
     }
-
-
 
 
     private fun hideKeyboard() {
@@ -329,116 +267,115 @@ class PostDetailesActivity :BaseActivity(), CommentsOptionClickListener {
     }
 
     private fun drawPostText() {
-        if (currentPost.postText.size==1){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
+        if (currentPost.postText.size == 1) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
         }
-        if (currentPost.postText.size==2){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
+        if (currentPost.postText.size == 2) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
         }
-        if (currentPost.postText.size==3){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
+        if (currentPost.postText.size == 3) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
         }
-        if (currentPost.postText.size==4){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
+        if (currentPost.postText.size == 4) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
         }
-        if (currentPost.postText.size==5){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost5.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
-            binding.tvPost5.text=currentPost.postText[4]
+        if (currentPost.postText.size == 5) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost5.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
+            binding.tvPost5.text = currentPost.postText[4]
         }
-        if (currentPost.postText.size==6){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost5.visibility=View.VISIBLE
-            binding.tvPost6.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
-            binding.tvPost5.text=currentPost.postText[4]
-            binding.tvPost6.text=currentPost.postText[5]
+        if (currentPost.postText.size == 6) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost5.visibility = View.VISIBLE
+            binding.tvPost6.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
+            binding.tvPost5.text = currentPost.postText[4]
+            binding.tvPost6.text = currentPost.postText[5]
         }
-        if (currentPost.postText.size==7){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost5.visibility=View.VISIBLE
-            binding.tvPost6.visibility=View.VISIBLE
-            binding.tvPost7.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
-            binding.tvPost5.text=currentPost.postText[4]
-            binding.tvPost6.text=currentPost.postText[5]
-            binding.tvPost7.text=currentPost.postText[6]
+        if (currentPost.postText.size == 7) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost5.visibility = View.VISIBLE
+            binding.tvPost6.visibility = View.VISIBLE
+            binding.tvPost7.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
+            binding.tvPost5.text = currentPost.postText[4]
+            binding.tvPost6.text = currentPost.postText[5]
+            binding.tvPost7.text = currentPost.postText[6]
         }
-        if (currentPost.postText.size==8){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost5.visibility=View.VISIBLE
-            binding.tvPost6.visibility=View.VISIBLE
-            binding.tvPost7.visibility=View.VISIBLE
-            binding.tvPost8.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
-            binding.tvPost5.text=currentPost.postText[4]
-            binding.tvPost6.text=currentPost.postText[5]
-            binding.tvPost7.text=currentPost.postText[6]
-            binding.tvPost8.text=currentPost.postText[7]
+        if (currentPost.postText.size == 8) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost5.visibility = View.VISIBLE
+            binding.tvPost6.visibility = View.VISIBLE
+            binding.tvPost7.visibility = View.VISIBLE
+            binding.tvPost8.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
+            binding.tvPost5.text = currentPost.postText[4]
+            binding.tvPost6.text = currentPost.postText[5]
+            binding.tvPost7.text = currentPost.postText[6]
+            binding.tvPost8.text = currentPost.postText[7]
         }
-        if (currentPost.postText.size==9){
-            binding.tvPost1.visibility=View.VISIBLE
-            binding.tvPost2.visibility=View.VISIBLE
-            binding.tvPost3.visibility=View.VISIBLE
-            binding.tvPost4.visibility=View.VISIBLE
-            binding.tvPost5.visibility=View.VISIBLE
-            binding.tvPost6.visibility=View.VISIBLE
-            binding.tvPost7.visibility=View.VISIBLE
-            binding.tvPost8.visibility=View.VISIBLE
-            binding.tvPost9.visibility=View.VISIBLE
-            binding.tvPost1.text=currentPost.postText[0]
-            binding.tvPost2.text=currentPost.postText[1]
-            binding.tvPost3.text=currentPost.postText[2]
-            binding.tvPost4.text=currentPost.postText[3]
-            binding.tvPost5.text=currentPost.postText[4]
-            binding.tvPost6.text=currentPost.postText[5]
-            binding.tvPost7.text=currentPost.postText[6]
-            binding.tvPost8.text=currentPost.postText[7]
-            binding.tvPost9.text=currentPost.postText[8]
+        if (currentPost.postText.size == 9) {
+            binding.tvPost1.visibility = View.VISIBLE
+            binding.tvPost2.visibility = View.VISIBLE
+            binding.tvPost3.visibility = View.VISIBLE
+            binding.tvPost4.visibility = View.VISIBLE
+            binding.tvPost5.visibility = View.VISIBLE
+            binding.tvPost6.visibility = View.VISIBLE
+            binding.tvPost7.visibility = View.VISIBLE
+            binding.tvPost8.visibility = View.VISIBLE
+            binding.tvPost9.visibility = View.VISIBLE
+            binding.tvPost1.text = currentPost.postText[0]
+            binding.tvPost2.text = currentPost.postText[1]
+            binding.tvPost3.text = currentPost.postText[2]
+            binding.tvPost4.text = currentPost.postText[3]
+            binding.tvPost5.text = currentPost.postText[4]
+            binding.tvPost6.text = currentPost.postText[5]
+            binding.tvPost7.text = currentPost.postText[6]
+            binding.tvPost8.text = currentPost.postText[7]
+            binding.tvPost9.text = currentPost.postText[8]
         }
     }
-
 
 
 }

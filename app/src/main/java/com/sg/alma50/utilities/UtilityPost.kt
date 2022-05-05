@@ -295,6 +295,7 @@ class UtilityPost {
 
 
     fun createComment(post: Post, commentText: String,currentUser:User) {
+        logi("UtilityPost 298     commentText=$commentText")
         val data = HashMap<String, Any>()
         data[COMMENT_ID] = "1"
         data[COMMENT_POST_ID] = post.postNum.toString()
@@ -330,13 +331,7 @@ class UtilityPost {
         return newComment
     }
 
-    /*data[USER_ID] = uid!!
-        data[USER_FULLNAME] = fullName.lowercase(Locale.getDefault())
-        data[USER_USERNAME] = userNameString.lowercase(Locale.getDefault())
-        data[USER_EMAIL] = email
-        data[USER_PASSWORD] = password
-        data[USER_BIO] = "It's me man..."
-        data[USER_TIME] = FieldValue.serverTimestamp()*/
+
 
     fun retrieveUserFromFirestore(snap: DocumentSnapshot?): User {
 

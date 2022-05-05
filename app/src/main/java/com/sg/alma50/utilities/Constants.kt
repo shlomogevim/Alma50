@@ -70,11 +70,11 @@ object Constants {
     const val USER_MOTO = "moto"
     const val USER_IMAGE = "image"
     const val USER_TIME = "time"
-
+    const val USER_PASSWORD = "userPassword"
     const val USER_ID = "userId"
 
 
-    const val USER_PASSWORD = "user password"
+
 
 
     const val USER_BIO = "user bio"

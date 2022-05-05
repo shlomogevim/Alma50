@@ -9,6 +9,7 @@
     <dimen name="auth_logo_height_size">100dp</dimen>
     <dimen name="title_textSize">18sp</dimen>
     <dimen name="et_textSize">16sp</dimen>
+    <dimen name="et_textSize1">24sp</dimen>
     <dimen name="et_padding">15dp</dimen>
     <dimen name="clickable_text_view_padding">5dp</dimen>
     <dimen name="forgot_password_textSize">14sp</dimen>

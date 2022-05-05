@@ -20,7 +20,7 @@ class LoginActivity :  BaseActivity(), View.OnClickListener {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        DemiData()
+     //   DemiData()
 
         binding.tvRegister.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
@@ -63,13 +63,12 @@ class LoginActivity :  BaseActivity(), View.OnClickListener {
             // Get the text from editText and trim the space
             val email = binding.etEmail.text.toString().trim { it <= ' ' }
             val password = binding.etPassword.text.toString().trim { it <= ' ' }
-            logi("login 64    ======>  email=$email  password=$password")
+          //  logi("login 64    ======>  email=$email  password=$password")
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        logi("login 69 email=$email  password=$password")
                         FirestoreClass().getUserDetails(this)
-                        logi("login 71 email=$email  password=$password")
+                      //  logi("login 71 email=$email  password=$password")
 
                     } else {
                         hideProgressDialog()
@@ -103,7 +102,7 @@ class LoginActivity :  BaseActivity(), View.OnClickListener {
         hideProgressDialog()
 
         // if (user.profileCompleted == ) {
-        logi("login 105  user==>$user")
+     //   logi("login 105  user==>$user")
         /* if (user.profileCompleted ==0) {
              val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
              intent.putExtra(EXTRA_USER_DETAILS, user)

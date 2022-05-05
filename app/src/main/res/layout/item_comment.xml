@@ -22,8 +22,8 @@
             android:id="@+id/user_profile_image_comment"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="5dp"
             android:layout_centerVertical="true"
+            android:padding="5dp"
             android:src="@drawable/profile" />
 
         <RelativeLayout
@@ -53,20 +53,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-
                     android:text="oct 17 7:30pm"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
-
-
-
             </RelativeLayout>
 
-
-
-
             <TextView
-                android:id="@+id/comment_comment"
+                android:id="@+id/comment_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layoutComment_Hadline"

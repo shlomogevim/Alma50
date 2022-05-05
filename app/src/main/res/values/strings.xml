@@ -8,7 +8,7 @@
     <string name="title_login">LOGIN</string>
     <string name="et_hint_email_id">Email ID</string>
     <string name="et_hint_password">Password</string>
-    <string name="lbl_forgot_password">Forgot Password?</string>
+    <string name="lbl_forgot_password">אם שכחת את הסיסמה, לחץ פה ...</string>
     <string name="btn_lbl_login">Login</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
 
@@ -35,15 +35,15 @@
 
     <string name="email_sent_success">\"Email sent successfully to reset your password! \"</string>
 
-    <string name="err_msg_enter_first_name">Please enter first name.</string>
-    <string name="err_msg_enter_last_name">Please enter last name.</string>
-    <string name="err_msg_enter_email">Please enter email.</string>
-    <string name="err_msg_enter_password">Please enter password.</string>
-    <string name="err_msg_enter_confirm_password">Please enter confirm password.</string>
-    <string name="err_msg_password_and_confirm_password_mismatch">Password and confirm password does not match.</string>
-    <string name="err_msg_agree_terms_and_condition">Please agree terms and condition.</string>
+    <string name="err_msg_enter_first_name">לא הכנסת שם משתמש...</string>
+    <string name="err_msg_enter_last_name">לא הכנסת כינוי  ...</string>
+    <string name="err_msg_enter_email">לא הכנסת כתובת מייל ...</string>
+    <string name="err_msg_enter_password">לא הכנסת סיסמה ....</string>
+    <string name="err_msg_enter_confirm_password">לא אישרת את הסיסמא ...</string>
+    <string name="err_msg_password_and_confirm_password_mismatch">הסיסמה והאישור סיסמה לא תואמים, נס שוב...</string>
+    <string name="err_msg_agree_terms_and_condition">חביבי אתה צריך לאשר שאתה קצת שרוט ...</string>
 
-    <string name="register_success">ההרשמה שלח הצליחה, ברכות להצטופות לכנופיה.</string>
+    <string name="register_success">ההרשמה שלך הצליחה, ברכות להצטופות לכנופיה.</string>
 
     <string name="title_complete_profile">COMPLETE PROFILE</string>
     <string name="et_hint_mobile_number">Mobile Number</string>

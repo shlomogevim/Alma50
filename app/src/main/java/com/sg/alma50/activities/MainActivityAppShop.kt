@@ -34,7 +34,7 @@ class MainActivityAppShop : AppCompatActivity() {
          pager = binding.viewPager
         postAdapter = PostAdapter(pager, this, posts)
         pager.adapter = postAdapter
-       addAnimation(pager)
+        addAnimation(pager)
     }
 
 

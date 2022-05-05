@@ -41,7 +41,7 @@ class SplashActivity : BaseActivity() {
             {
                 var currentUserID = FirestoreClass().getCurrentUserID()
 
-                logi("SplashAvtivity 42  \n     currentUserID  ===> $currentUserID  ")
+              // logi("SplashAvtivity 42  \n     currentUserID  ===> $currentUserID  ")
 
              /*   currentUserID=""
                 FirebaseAuth.getInstance().signOut()*/

@@ -12,6 +12,7 @@ import com.sg.alma50.R
 import com.sg.alma50.interfaces.CommentsOptionClickListener
 import com.sg.alma50.modeles.Comment
 import com.sg.alma50.modeles.User
+import com.sg.alma50.utilities.BaseActivity
 import com.sg.alma50.utilities.Constants.USER_REF
 import com.sg.alma50.utilities.UtilityPost
 
@@ -19,8 +20,6 @@ import com.sg.alma50.utilities.UtilityPost
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
 import kotlin.collections.ArrayList
 
 class CommentAdapter(
@@ -30,6 +29,7 @@ class CommentAdapter(
     RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     private lateinit var context: Context
     val util = UtilityPost()
+    val base=BaseActivity()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -48,14 +48,16 @@ class CommentAdapter(
 
         val imageProfile = itemView.findViewById<CircleImageView>(R.id.user_profile_image_comment)
         val userNameTV = itemView.findViewById<TextView>(R.id.user_name_comment)
-        var commentTv = itemView.findViewById<TextView>(R.id.comment_comment)
+        var commentTv = itemView.findViewById<TextView>(R.id.comment_text)
         var commentCardView = itemView.findViewById<CardView>(R.id.commentCardView)
         val commentTimeStamp = itemView.findViewById<TextView>(R.id.commentTimestampTv)
 
         fun bindComment(comment: Comment) {
+//            base.logi("CommentAdapter 56                      comment= $comment")
             setCurrentUserImage(imageProfile, comment)
             userNameTV.text = comment.userName
             commentTv.text = comment.text
+
 
 
 

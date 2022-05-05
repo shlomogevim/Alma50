@@ -21,7 +21,7 @@ class RegisterActivity : BaseActivity() {
         binding= ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         logi("Register 24")
-        //   setupActionBar()
+
         binding.btnRegister.setOnClickListener {
             logi("Register 26")
             registerUser()
