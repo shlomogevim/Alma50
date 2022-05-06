@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.sg.alma50.R
 import com.sg.alma50.adapters.PostAdapter
 import com.sg.alma50.databinding.ActivityMainAppShopBinding
@@ -15,6 +16,7 @@ import com.sg.alma50.modeles.Post
 import com.sg.alma50.utilities.BookFlipPageTransformer2
 import com.sg.alma50.utilities.CardFlipPageTransformer2
 import com.sg.alma50.utilities.Constants.POST_REF
+import com.sg.alma50.utilities.Constants.POST_TIME_STAMP
 import com.sg.alma50.utilities.UtilityPost
 import java.util.ArrayList
 
@@ -41,7 +43,9 @@ class MainActivityAppShop : AppCompatActivity() {
 
     fun downloadAllPost(): ArrayList<Post> {
         posts.clear()
-        FirebaseFirestore.getInstance().collection(POST_REF).addSnapshotListener { value, error ->
+        FirebaseFirestore.getInstance().collection(POST_REF)
+            .orderBy( POST_TIME_STAMP, Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
             if (value != null) {
                 for (doc in value.documents) {
                     var post = util.retrivePostFromFirestore(doc)
